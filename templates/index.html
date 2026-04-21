@@ -1,0 +1,118 @@
+<!-- templates/index.html -->
+<!-- Учебный шаблон с пояснениями для учеников -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💱 Конвертер валют</title>
+
+    <!-- Подключаем Bootstrap для быстрого и красивого дизайна -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Наши стили -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <!-- Заголовок приложения -->
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold">💱 Конвертер валют</h1>
+
+            </div>
+
+            <!-- Блок: статус обновления курсов -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-medium">📅 Последнее обновление:</span>
+                        <span id="last-update" class="badge bg-secondary">Загрузка...</span>
+                    </div>
+                    <button id="btn-update" class="btn btn-sm btn-primary mt-2 w-100">
+                        🔄 Обновить курсы с внешнего API
+                    </button>
+                    <div id="update-message" class="mt-2 small"></div>
+                </div>
+            </div>
+
+            <!-- Форма конвертации -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-white fw-bold">
+                    🔢 Конвертация
+                </div>
+                <div class="card-body">
+                    <form id="convert-form">
+
+                        <!-- Поле: сумма -->
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Сумма</label>
+                            <input type="number"
+                                   id="amount"
+                                   name="amount"
+                                   class="form-control"
+                                   placeholder="Например: 100"
+                                   step="0.01"
+                                   min="0"
+                                   required>
+                            <div class="invalid-feedback">Пожалуйста, введите корректную сумму</div>
+                        </div>
+
+                        <!-- Поля: валюты -->
+                        <div class="row g-3 mb-3">
+                            <div class="col">
+                                <label for="from-currency" class="form-label">Из валюты</label>
+                                <select id="from-currency" name="from" class="form-select" required>
+                                    {% for currency in currencies %}
+                                        <option value="{{ currency }}" {% if currency == 'RUB' %}selected{% endif %}>
+                                            {{ currency }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="to-currency" class="form-label">В валюту</label>
+                                <select id="to-currency" name="to" class="form-select" required>
+                                    {% for currency in currencies %}
+                                        <option value="{{ currency }}" {% if currency == 'USD' %}selected{% endif %}>
+                                            {{ currency }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Кнопка конвертации -->
+                        <button type="submit" class="btn btn-success w-100 py-2">
+                            🔄 Конвертировать
+                        </button>
+                    </form>
+
+                    <!-- Результат конвертации -->
+                    <div id="result-block" class="mt-4 p-3 bg-success bg-opacity-10 rounded d-none">
+                        <h5 class="mb-2">✅ Результат:</h5>
+                        <p class="fs-4 fw-bold mb-0" id="conversion-result">--</p>
+                        <small class="text-muted" id="conversion-details"></small>
+                    </div>
+
+                    <!-- Сообщения об ошибках -->
+                    <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
+                </div>
+            </div>
+
+            <!-- Подвал с пояснением для учеников -->
+            <div class="text-center mt-4 text-muted small">
+                <p class="mb-0">Курсы предоставляются сервисом exchangerate-api.com</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Подключаем JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
