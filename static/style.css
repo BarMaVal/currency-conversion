@@ -1,0 +1,36 @@
+/* static/style.css */
+/* Дополнительные стили для учебного проекта */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border: none;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+#result-block {
+    border-left: 4px solid #198754;
+}
+
+/* Анимация для кнопки обновления */
+#btn-update:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 576px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+}
